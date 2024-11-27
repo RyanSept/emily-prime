@@ -1,0 +1,4 @@
+
+COMPASSIONATE_HIPPOPOTAMUS = "agent-61801eda-103a-4e5f-9c94-8712a633d032"
+TEST_RYAN_2014 = "agent-04ea0c4a-55fb-489a-91d8-a258b4d501b1"
+WHATSAPP_DB_PATH = "./data/msgstore.db"
