@@ -12,6 +12,15 @@ uv pip install
 letta server
 ```
 
+## Set up pgvector
+
+```bash
+brew install pgvector
+psql postgres
+postgres=# CREATE EXTENSION vector;
+# CREATE EXTENSION
+```
+
 ## Generate Archival memories and attach to agent
 
 ```bash
