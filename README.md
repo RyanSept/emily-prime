@@ -1,5 +1,7 @@
 # Emily Prime
 
+<img src="./docs/emily-prime.jpeg" width=600 />
+
 ## Install
 
 ```bash
