@@ -8,6 +8,7 @@ class WhatsappMessage(typing.TypedDict):
     _id: int
     text_data: str
     timestamp: int
+    recipient: str
 
 def _message_factory(cursor, row):
     """
@@ -28,7 +29,9 @@ def get_whatsapp_messages_from_db(db_path: str = WHATSAPP_DB_PATH) -> typing.Lis
     # only do <=2014 messages for now and limit to 100
     until  = int(datetime.datetime(2014, 12, 31, 23, 59, 59).timestamp()) * 1000  # convert from unix to whatsapp timestamp
     query = f"""
-    SELECT _id, text_data, timestamp FROM  "message"
+    SELECT message._id, text_data, "jid".user as recipient, timestamp FROM  "message"
+    LEFT JOIN "chat" ON "message".chat_row_id = "chat"._id
+    LEFT JOIN "jid" ON "chat".jid_row_id = "jid"._id
     WHERE from_me=1
     AND timestamp < {until}
     AND LENGTH(text_data) - LENGTH(REPLACE(text_data, ' ', '')) + 1 > {MIN_TEXT_LENGTH}
