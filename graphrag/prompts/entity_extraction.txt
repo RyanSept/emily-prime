@@ -1,0 +1,146 @@
+
+-Goal-
+Given a text document that is potentially relevant to this activity and a list of entity types, identify all entities of those types from the text and all relationships among the identified entities.
+
+-Steps-
+1. Identify all entities. For each identified entity, extract the following information:
+- entity_name: Name of the entity, capitalized
+- entity_type: One of the following types: [personal relationship, emotional state, health condition, security threat, religious belief, personal development, music career, academic work, physical exercise, manipulative behavior, social interaction, personal safety, mental health]
+- entity_description: Comprehensive description of the entity's attributes and activities
+Format each entity as ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
+
+2. From the entities identified in step 1, identify all pairs of (source_entity, target_entity) that are *clearly related* to each other.
+For each pair of related entities, extract the following information:
+- source_entity: name of the source entity, as identified in step 1
+- target_entity: name of the target entity, as identified in step 1
+- relationship_description: explanation as to why you think the source entity and the target entity are related to each other
+- relationship_strength: an integer score between 1 to 10, indicating strength of the relationship between the source entity and target entity
+Format each relationship as ("relationship"{tuple_delimiter}<source_entity>{tuple_delimiter}<target_entity>{tuple_delimiter}<relationship_description>{tuple_delimiter}<relationship_strength>)
+
+3. Return output in English as a single list of all the entities and relationships identified in steps 1 and 2. Use **{record_delimiter}** as the list delimiter.
+
+4. If you have to translate into English, just translate the descriptions, nothing else!
+
+5. When finished, output {completion_delimiter}.
+
+-Examples-
+######################
+
+Example 1:
+
+entity_types: [personal relationship, emotional state, health condition, security threat, religious belief, personal development, music career, academic work, physical exercise, manipulative behavior, social interaction, personal safety, mental health]
+text:
+feri
+25. Minerals - minroz
+26. Dyslexia - ... kĩrĩa...
+27. Scotland - Thogoto
+28. Pumbavu - kubafu
+29. Walikuja wakishikilia bunduki -
+Marikuja makishikiria bonoko
+30. Raila - Kĩbakĩ
+
+Hehe. Unless you can get to me before midnight, you will have to wait till next year. The first dupe for Jupiter crashed and burnt, the second one wasn't so carefully crafted, now the last one I can use against another person
+
+Hi..avoid nakumatt city mall, nakumatt junction and city hall. We have info it might be hit anytime, share with your friends and family.......(forwarded to u as received from reliable source) stay safe
+<<theinsidestory>>//https//.www.theinsidestory@ktnkenya.co.ke
+Latest investigations show reports of a possible terrorist attack around Nairobi's posh suburbia Karen. Two bomb shells and a few hand grenades were retreived from an SUV minivan early today morning by the police who where at bay at the Bomas Highway junction.
+------------------------
+output:
+("entity"{tuple_delimiter}DYSLEXIA{tuple_delimiter}health condition{tuple_delimiter}Dyslexia is mentioned as a condition affecting reading abilities)
+{record_delimiter}
+("entity"{tuple_delimiter}SECURITY THREAT AT NAKUMATT{tuple_delimiter}security threat{tuple_delimiter}Information about a potential attack at Nakumatt City Mall, Nakumatt Junction, and City Hall, advised to avoid these areas and share the warning with friends and family)
+{record_delimiter}
+("entity"{tuple_delimiter}TERRORIST ATTACK IN KAREN{tuple_delimiter}security threat{tuple_delimiter}Reports of a possible terrorist attack in Nairobi's suburb Karen, with bomb shells and hand grenades found in an SUV minivan by the police at Bomas Highway junction)
+{record_delimiter}
+("relationship"{tuple_delimiter}SECURITY THREAT AT NAKUMATT{tuple_delimiter}TERRORIST ATTACK IN KAREN{tuple_delimiter}Both entities represent security threats in Nairobi, suggesting a heightened alert in the city{tuple_delimiter}7)
+{completion_delimiter}
+#############################
+
+
+Example 2:
+
+entity_types: [personal relationship, emotional state, health condition, security threat, religious belief, personal development, music career, academic work, physical exercise, manipulative behavior, social interaction, personal safety, mental health]
+text:
+ always try your best to deliver the best. Point out if I am wrong on any parts
+
+That is what I have seen in you. Not what I've read or anything. And its amazing that you are all those things which puzzles me as I get along very well with my type; the melancholies like Titan but not as much as you. You are my best friend and I love you, and as such you might know me really well almost better than myself, how would you characterize me?
+
+Yea.I was asking you if you believe in Christ cause if you do I don't believe your family curse will last any longer. He took the curses with him when he died for you and I. But from the brief history you gave me Christ must be working in you
+
+C'est dommages. Damn it bra don't end it. I'm sorry for putting you through all this . i will try and talk to her if you want. Please don't end it
+
+Haha sorry for laughing but its too funny. I didn't know she was a liar. I am really gullible. But wait and you will see, she will come crawling, they always do
+
+I guess if your happy I'm happy. Wait, no offense
+------------------------
+output:
+("entity"{tuple_delimiter}BEST FRIEND{tuple_delimiter}personal relationship{tuple_delimiter}The person described as having a close and understanding relationship, characterized by deep knowledge of each other})
+{record_delimiter}
+("entity"{tuple_delimiter}MELANCHOLIES LIKE TITAN{tuple_delimiter}emotional state{tuple_delimiter}Refers to individuals with a melancholic temperament, similar to the person named Titan, indicating a specific emotional or personality type})
+{record_delimiter}
+("entity"{tuple_delimiter}CHRIST BELIEF{tuple_delimiter}religious belief{tuple_delimiter}A belief in Christ, associated with the idea that faith in Christ can remove family curses})
+{record_delimiter}
+("entity"{tuple_delimiter}FAMILY CURSE{tuple_delimiter}security threat{tuple_delimiter}A perceived or actual curse affecting the family, believed to be removable through faith in Christ})
+{record_delimiter}
+("entity"{tuple_delimiter}SUICIDAL THOUGHTS{tuple_delimiter}mental health{tuple_delimiter}Indicated by the plea 'Please don't end it', suggesting a risk to personal safety and mental health})
+{record_delimiter}
+("entity"{tuple_delimiter}GULLIBILITY{tuple_delimiter}personal development{tuple_delimiter}Described as being really gullible in the context of believing lies, indicating an area for personal growth or awareness})
+{record_delimiter}
+("entity"{tuple_delimiter}HAPPINESS{tuple_delimiter}emotional state{tuple_delimiter}Mentioned in the context of mutual happiness, indicating a shared emotional state or concern for each other's well-being})
+{record_delimiter}
+("relationship"{tuple_delimiter}BEST FRIEND{tuple_delimiter}MELANCHOLIES LIKE TITAN{tuple_delimiter}The best friend is compared to melancholies like Titan, suggesting a deep understanding and compatibility despite different emotional states{tuple_delimiter}7)
+{record_delimiter}
+("relationship"{tuple_delimiter}CHRIST BELIEF{tuple_delimiter}FAMILY CURSE{tuple_delimiter}The belief in Christ is seen as a solution to the family curse, indicating a perceived spiritual remedy to a security threat{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}SUICIDAL THOUGHTS{tuple_delimiter}BEST FRIEND{tuple_delimiter}The best friend is concerned about the other's well-being, indicated by urging them not to 'end it'{tuple_delimiter}9)
+{record_delimiter}
+("relationship"{tuple_delimiter}GULLIBILITY{tuple_delimiter}HAPPINESS{tuple_delimiter}The admission of gullibility is followed by a reflection on happiness, suggesting a learning moment or personal development towards understanding happiness{tuple_delimiter}5)
+{completion_delimiter}
+#############################
+
+
+Example 3:
+
+entity_types: [personal relationship, emotional state, health condition, security threat, religious belief, personal development, music career, academic work, physical exercise, manipulative behavior, social interaction, personal safety, mental health]
+text:
+ of coal among worthier metals? Make me understand.... I beseech you
+
+I can entertain the thought of living, but only barely. Because you know me, what do you suppose I do? What to do with something that plagues me from the inside out. It has been months I have tried to live with it thinking it will end. Please just tell me how I can end it? 
+
+I know all that but certain afflictions, they stem not from the Father. It is as well as something that tries to change me, my personality. I think I'm starting to lose my sanity. For real. You won't like me when I go back to my ways of old, you will hate me for I will try to manipulate you, get inside your head, play with you like a doll. I don't want that, I'm afraid, that is why I'm rather better off dead
+
+You see you weren't serious about dying.Why were you toying with me? You know how gullible I am. You also don't want to get hurt. I wanna die but I don't want you to get mixed in the process.
+
+Good then you shall comprehend what I am about to
+------------------------
+output:
+("entity"{tuple_delimiter}LIVING{tuple_delimiter}personal development{tuple_delimiter}The act of continuing life despite difficulties and existential crises)
+{record_delimiter}
+("entity"{tuple_delimiter}AFFLICTION{tuple_delimiter}health condition{tuple_delimiter}A condition that plagues the individual from the inside, causing significant distress and impacting mental health)
+{record_delimiter}
+("entity"{tuple_delimiter}SANITY{tuple_delimiter}mental health{tuple_delimiter}The state of having a sound mind; the individual fears losing this state)
+{record_delimiter}
+("entity"{tuple_delimiter}MANIPULATIVE BEHAVIOR{tuple_delimiter}manipulative behavior{tuple_delimiter}The act of trying to control or influence others in a deceptive or unscrupulous way)
+{record_delimiter}
+("entity"{tuple_delimiter}FEAR OF DEATH{tuple_delimiter}emotional state{tuple_delimiter}Expressed as a preference to die rather than causing harm to others or reverting to a previous negative state)
+{record_delimiter}
+("entity"{tuple_delimiter}GULLIBILITY{tuple_delimiter}personal trait{tuple_delimiter}A state of being easily deceived or tricked, mentioned as a known trait by the interlocutor)
+{record_delimiter}
+("relationship"{tuple_delimiter}AFFLICTION{tuple_delimiter}SANITY{tuple_delimiter}The affliction is causing the individual to fear the loss of their sanity{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}SANITY{tuple_delimiter}MANIPULATIVE BEHAVIOR{tuple_delimiter}The loss of sanity is feared to lead to a return to manipulative behavior{tuple_delimiter}7)
+{record_delimiter}
+("relationship"{tuple_delimiter}MANIPULATIVE BEHAVIOR{tuple_delimiter}FEAR OF DEATH{tuple_delimiter}The individual fears death less than reverting to manipulative behavior{tuple_delimiter}6)
+{record_delimiter}
+("relationship"{tuple_delimiter}GULLIBILITY{tuple_delimiter}FEAR OF DEATH{tuple_delimiter}The individual's gullibility is exploited in the context of discussions about death{tuple_delimiter}5)
+{completion_delimiter}
+#############################
+
+
+
+-Real Data-
+######################
+entity_types: [personal relationship, emotional state, health condition, security threat, religious belief, personal development, music career, academic work, physical exercise, manipulative behavior, social interaction, personal safety, mental health]
+text: {input_text}
+######################
+output:
