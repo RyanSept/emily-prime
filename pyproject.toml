@@ -5,8 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "graphrag>=1.0.1",
     "haystack-ai>=2.8.0",
     "pgvector-haystack>=1.2.0",
+    "phonenumbers>=8.13.52",
     "sentence-transformers>=3.0.0",
 ]
 
