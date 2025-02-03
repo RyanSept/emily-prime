@@ -23,8 +23,16 @@ postgres=# CREATE EXTENSION vector;
 # CREATE EXTENSION
 ```
 
-## Generate Archival memories and attach to agent
+## Create the table and index all messages
 
-```bash
-python synthesize_archival_memories.py
+This command will get all the messages from the Whatsapp DB, generate their embeddings and insert them into a pgvector table
+
+```sh
+python index_messages.py
+```
+
+## Start chat session
+
+```sh
+python main.py
 ```
